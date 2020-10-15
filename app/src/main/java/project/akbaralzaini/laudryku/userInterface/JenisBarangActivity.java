@@ -2,6 +2,7 @@ package project.akbaralzaini.laudryku.userInterface;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,7 +20,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class JenisBarangActivity extends AppCompatActivity {
+public class JenisBarangActivity extends Activity {
 
     private TextView tvNamaJenis,tvHargaJenis,tvLamaWaktu;
     private Button btnAddJenis;

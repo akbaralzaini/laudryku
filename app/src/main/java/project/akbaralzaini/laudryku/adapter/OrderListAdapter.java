@@ -11,13 +11,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import project.akbaralzaini.laudryku.R;
 import project.akbaralzaini.laudryku.model.Order;
+import project.akbaralzaini.laudryku.userInterface.DetailOrderActivity;
 
 public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyViewHolder>{
     List<Order> orderList;
@@ -39,8 +42,11 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
     public void onBindViewHolder(@NonNull OrderListAdapter.MyViewHolder holder, int position) {
 
         holder.tvNamaPemesan.setText(orderList.get(position).getNama_pemesan());
-        holder.tvTanggalOrder.setText(orderList.get(position).getTanggal_selesai());
-        holder.tvTotalOrder.setText("Rp. "+orderList.get(position).getTotal_bayar());
+        holder.tvTanggalOrder.setText(orderList.get(position).getTanggal_masuk());
+        Locale locale = new Locale("id", "ID");
+        NumberFormat sharga = NumberFormat.getCurrencyInstance(locale);
+
+        holder.tvTotalOrder.setText(sharga.format(orderList.get(position).getTotal_bayar()));
         switch (orderList.get(position).getStatus()){
             case "dilaundry":
                 holder.ivStatusOrder.setImageResource(R.drawable.waiting);
@@ -55,7 +61,15 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent detailOrder =  new Intent()
+                Intent detailOrder =  new Intent(view.getContext(), DetailOrderActivity.class);
+                detailOrder.putExtra("id_order",orderList.get(position).getId_order());
+                detailOrder.putExtra("tanggal_order",orderList.get(position).getTanggal_masuk());
+                detailOrder.putExtra("nama_pemesan",orderList.get(position).getNama_pemesan());
+
+                Locale locale = new Locale("id", "ID");
+                NumberFormat sharga = NumberFormat.getCurrencyInstance(locale);
+                detailOrder.putExtra("total_bayar",sharga.format(orderList.get(position).getTotal_bayar()));
+                view.getContext().startActivity(detailOrder);
             }
         });
     }

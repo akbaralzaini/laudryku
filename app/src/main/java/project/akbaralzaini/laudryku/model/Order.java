@@ -6,7 +6,7 @@ public class Order {
     @SerializedName("id_laundry")
     private int id_laundry;
     @SerializedName("id_order")
-    private String id_order;
+    private int id_order;
     @SerializedName("tanggal_masuk")
     private String tanggal_masuk;
     @SerializedName("tanggal_selesai")
@@ -21,23 +21,22 @@ public class Order {
     private String no_telpon;
     @SerializedName("alamat")
     private String alamat;
-    @SerializedName("dp")
-    private String dp;
     @SerializedName("total_bayar")
-    private String total_bayar;
+    private float total_bayar;
 
 
-    public Order(int id_laundry, String id_order, String tanggal_masuk, String tanggal_selesai, String status, String nama_pemesan, String no_telpon, String alamat, String dp, String total_bayar) {
+    public Order(int id_order,int id_laundry, String status, String nama_pemesan, String no_telpon, String alamat, float total_bayar) {
         this.id_laundry = id_laundry;
-        this.id_order = id_order;
-        this.tanggal_masuk = tanggal_masuk;
-        this.tanggal_selesai = tanggal_selesai;
         this.status = status;
         this.nama_pemesan = nama_pemesan;
         this.no_telpon = no_telpon;
         this.alamat = alamat;
-        this.dp = dp;
         this.total_bayar = total_bayar;
+        this.id_order = id_order;
+    }
+
+    public Order(){
+
     }
 
     public int getId_laundry() {
@@ -48,11 +47,11 @@ public class Order {
         this.id_laundry = id_laundry;
     }
 
-    public String getId_order() {
+    public int getId_order() {
         return id_order;
     }
 
-    public void setId_order(String id_order) {
+    public void setId_order(int id_order) {
         this.id_order = id_order;
     }
 
@@ -112,19 +111,11 @@ public class Order {
         this.alamat = alamat;
     }
 
-    public String getDp() {
-        return dp;
-    }
-
-    public void setDp(String dp) {
-        this.dp = dp;
-    }
-
-    public String getTotal_bayar() {
+    public float getTotal_bayar() {
         return total_bayar;
     }
 
-    public void setTotal_bayar(String total_bayar) {
+    public void setTotal_bayar(float total_bayar) {
         this.total_bayar = total_bayar;
     }
 }

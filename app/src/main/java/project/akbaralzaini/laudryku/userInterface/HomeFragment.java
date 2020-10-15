@@ -36,6 +36,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private OrderApiInterface orderApiInterface;
     TextView nama_laundry;
+    SharedPrefManager sharedPrefManager;
 
 
     public HomeFragment() {
@@ -49,7 +50,7 @@ public class HomeFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         // Inflate the layout for this fragment
         rvOrder = rootView.findViewById(R.id.list_recent);
-        SharedPrefManager sharedPrefManager = new SharedPrefManager(Objects.requireNonNull(getContext()));
+        sharedPrefManager = new SharedPrefManager(Objects.requireNonNull(getContext()));
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         rvOrder.setLayoutManager(mLayoutManager);
@@ -66,7 +67,8 @@ public class HomeFragment extends Fragment {
 
 
     private void refresh() {
-        Call<List<Order>> listCall = orderApiInterface.getOrder();
+        Laundry l = sharedPrefManager.getLaundry();
+        Call<List<Order>> listCall = orderApiInterface.getOrderby(l.getId_laundry());
         listCall.enqueue(new Callback<List<Order>>() {
             @Override
             public void onResponse(Call<List<Order>> call, Response<List<Order>> response) {

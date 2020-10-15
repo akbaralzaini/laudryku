@@ -12,12 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
+import java.util.Objects;
 
 import project.akbaralzaini.laudryku.R;
 import project.akbaralzaini.laudryku.adapter.OrderListAdapter;
+import project.akbaralzaini.laudryku.model.Laundry;
 import project.akbaralzaini.laudryku.model.Order;
 import project.akbaralzaini.laudryku.rest.ApiClient;
 import project.akbaralzaini.laudryku.rest.OrderApiInterface;
+import project.akbaralzaini.laudryku.util.SharedPrefManager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -32,6 +35,7 @@ public class ListOrderFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
     private OrderApiInterface orderApiInterface;
+    private SharedPrefManager sharedPrefManager;
 
     public ListOrderFragment() {
         // Required empty public constructor
@@ -45,6 +49,7 @@ public class ListOrderFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_list_order, container, false);
         // Inflate the layout for this fragment
         rvOrder = rootView.findViewById(R.id.list_recent);
+        sharedPrefManager = new SharedPrefManager(Objects.requireNonNull(getContext()));
 
         mLayoutManager = new LinearLayoutManager(getContext());
         rvOrder.setLayoutManager(mLayoutManager);
@@ -55,7 +60,8 @@ public class ListOrderFragment extends Fragment {
     }
 
     private void refresh() {
-        Call<List<Order>> listCall = orderApiInterface.getOrder();
+        Laundry l = sharedPrefManager.getLaundry();
+        Call<List<Order>> listCall = orderApiInterface.getOrderby(l.getId_laundry());
         listCall.enqueue(new Callback<List<Order>>() {
             @Override
             public void onResponse(Call<List<Order>> call, Response<List<Order>> response) {
