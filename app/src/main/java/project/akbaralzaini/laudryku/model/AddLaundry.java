@@ -9,6 +9,8 @@ public class AddLaundry {
     @SerializedName("alamat") private String alamat;
     @SerializedName("total_bayar") private float total_bayar;
     @SerializedName("status") private String status;
+    @SerializedName("tanggal_masuk") private String tanggal_masuk;
+    @SerializedName("tanggal_selesai") private String tanggal_selesai;
 
     public AddLaundry(int id_laundry, String nama_pemesan, String no_telpon, String alamat, float total_bayar, String status) {
         this.id_laundry = id_laundry;
@@ -74,5 +76,21 @@ public class AddLaundry {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getTanggal_masuk() {
+        return tanggal_masuk;
+    }
+
+    public void setTanggal_masuk(String tanggal_masuk) {
+        this.tanggal_masuk = tanggal_masuk;
+    }
+
+    public String getTanggal_selesai() {
+        return tanggal_selesai;
+    }
+
+    public void setTanggal_selesai(String tanggal_selesai) {
+        this.tanggal_selesai = tanggal_selesai;
     }
 }

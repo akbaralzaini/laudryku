@@ -4,6 +4,7 @@ import java.util.List;
 
 import project.akbaralzaini.laudryku.model.AddLaundry;
 import project.akbaralzaini.laudryku.model.Order;
+import project.akbaralzaini.laudryku.model.UpdateOrder;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -21,6 +22,9 @@ public interface OrderApiInterface {
 
     @POST("Order/Create")
     Call<Order> createOrder(@Body AddLaundry order);
+
+    @PUT("Order/Update/{id_order}")
+    Call<Order> updateStatus(@Path("id_order") int id_order, @Body UpdateOrder updateOrder);
 
 
 }

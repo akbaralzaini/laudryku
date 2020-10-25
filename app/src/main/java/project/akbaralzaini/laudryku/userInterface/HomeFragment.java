@@ -52,16 +52,17 @@ public class HomeFragment extends Fragment {
         rvOrder = rootView.findViewById(R.id.list_recent);
         sharedPrefManager = new SharedPrefManager(Objects.requireNonNull(getContext()));
 
+
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         rvOrder.setLayoutManager(mLayoutManager);
         orderApiInterface = ApiClient.getClient().create(OrderApiInterface.class);
-
+        refresh();
         //deklarasi isi
         nama_laundry = rootView.findViewById(R.id.nama_laundry);
         Laundry l = sharedPrefManager.getLaundry();
         nama_laundry.setText(l.getNama_laundry());
 
-        refresh();
+
         return rootView;
     }
 

@@ -16,8 +16,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -43,6 +46,7 @@ public class AddOrderActivity extends Activity {
     private SharedPrefManager sharedPrefManager;
     private TextView tvTotal;
     private Spinner sDaftarJenis;
+    private View llProgressBar;
     JenisBarangApiInterface jenisBarangApiInterface;
     OrderApiInterface orderApiInterface;
     DetailOrderApiInterface detailOrderApiInterface;
@@ -66,7 +70,7 @@ public class AddOrderActivity extends Activity {
         sharedPrefManager = new SharedPrefManager(AddOrderActivity.this);
         orderApiInterface = ApiClient.getClient().create(OrderApiInterface.class);
         detailOrderApiInterface = ApiClient.getClient().create(DetailOrderApiInterface.class);
-
+        llProgressBar = findViewById(R.id.llProgressBar);
 
         //spinner dan detail
         tvTotal.setText("Rp. 0");
@@ -115,10 +119,20 @@ public class AddOrderActivity extends Activity {
         });
 
         btnTambahOrder.setOnClickListener(v -> {
-            Log.d("kikk","klikkk");
+            llProgressBar.setVisibility(View.VISIBLE);
+
+            Calendar calendar = Calendar.getInstance();
+            Locale locale = new Locale("id", "ID");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",locale);
+            String datenow = formatter.format(calendar.getTime());
+            calendar.add(Calendar.DATE,3);
+            String dateSelesai = formatter.format(calendar.getTime());
+
+
             Laundry l = sharedPrefManager.getLaundry();
             AddLaundry order = new AddLaundry(l.getId_laundry(),edtNamaPemesan.getText().toString(),edtTlp.getText().toString(),edtAlamat.getText().toString(),total_bayar,"dilaundry");
-
+            order.setTanggal_masuk(datenow);
+            order.setTanggal_selesai(dateSelesai);
             Call<Order> createOrde = orderApiInterface.createOrder(order);
             createOrde.enqueue(new Callback<Order>() {
                 @Override
@@ -141,14 +155,19 @@ public class AddOrderActivity extends Activity {
                         });
                     }
 
-
+                    llProgressBar.setVisibility(View.GONE);
                     AlertDialog.Builder builder = new AlertDialog.Builder(AddOrderActivity.this);
                     builder.setTitle("Informasi");
                     builder.setMessage("Berhasil Dipesan");
                     builder.setNeutralButton("Ok", (dialogInterface, i) -> {
                         Intent detail = new Intent(AddOrderActivity.this,DetailOrderActivity.class);
                         detail.putExtra("id_order",hasil.getId_order());
-                        detail.putExtra("tanggal_order","-");
+                        detail.putExtra("tanggal_order",datenow);
+                        detail.putExtra("nama_pemesan",edtNamaPemesan.getText().toString());
+                        detail.putExtra("status","dilaundry");
+                        Locale locale = new Locale("id", "ID");
+                        NumberFormat sharga = NumberFormat.getCurrencyInstance(locale);
+                        detail.putExtra("total_bayar",sharga.format(total_bayar));
                         startActivity(detail);
                         finish();
                     });

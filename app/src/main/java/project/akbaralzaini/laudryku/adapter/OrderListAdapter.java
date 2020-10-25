@@ -65,6 +65,8 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.MyVi
                 detailOrder.putExtra("id_order",orderList.get(position).getId_order());
                 detailOrder.putExtra("tanggal_order",orderList.get(position).getTanggal_masuk());
                 detailOrder.putExtra("nama_pemesan",orderList.get(position).getNama_pemesan());
+                detailOrder.putExtra("no_tlp",orderList.get(position).getNo_telpon());
+                detailOrder.putExtra("status",orderList.get(position).getStatus());
 
                 Locale locale = new Locale("id", "ID");
                 NumberFormat sharga = NumberFormat.getCurrencyInstance(locale);
