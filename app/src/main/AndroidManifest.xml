@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="project.akbaralzaini.laudryku">
+    package="project.fmipa.laudryku">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -13,7 +13,8 @@
         android:roundIcon="@drawable/iconmachine"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".userInterface.HistoryActivity"></activity>
+        <activity android:name=".userInterface.UpdateProfilActivity"></activity>
+        <activity android:name=".userInterface.HistoryActivity" />
         <activity android:name=".userInterface.DetailOrderActivity" />
         <activity android:name=".userInterface.JenisBarangActivity" />
         <activity android:name=".userInterface.AddOrderActivity" />

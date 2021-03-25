@@ -17,7 +17,7 @@
         android:layout_alignParentTop="true"/>
 
 
-    <project.akbaralzaini.laudryku.CurvedBottomNavigationView
+    <project.fmipa.laudryku.CurvedBottomNavigationView
         app:itemIconSize="19dp"
         app:labelVisibilityMode="unlabeled"
         android:layout_width="match_parent"
